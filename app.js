@@ -107,7 +107,17 @@ function renderSetup(){
 
   const genres = genresFor(f.type);
   f.genres = f.genres.filter(g => genres.includes(g));
-  $('genre-chips').replaceChildren(...genres.map(g => chip(g, f.genres.includes(g), { genre: g })));
+  const options = $('genre-options');
+  options.replaceChildren(options.querySelector('legend'), ...genres.map(g => {
+    const label = el('label', 'check');
+    const input = el('input');
+    input.type = 'checkbox';
+    input.value = g;
+    input.checked = f.genres.includes(g);
+    label.append(input, el('span', 'box'), el('span', 'check-text', g));
+    return label;
+  }));
+  renderGenreSummary();
 
   const providers = catalog.providers;
   $('services-field').hidden = providers.length <= 1;
@@ -122,6 +132,20 @@ function renderSetup(){
   }));
 }
 
+function renderGenreSummary(){
+  const g = state.filters.genres;
+  const summary = $('genre-summary');
+  summary.textContent = g.length === 0 ? 'Any genre'
+    : g.length <= 2 ? g.join(', ')
+    : `${g.slice(0, 2).join(', ')} +${g.length - 2}`;
+  summary.classList.toggle('is-empty', g.length === 0);
+}
+
+function setGenrePanel(open){
+  $('genre-panel').hidden = !open;
+  document.querySelector('[data-action="genres-toggle"]').setAttribute('aria-expanded', String(open));
+}
+
 function toggle(list, value){
   return list.includes(value) ? list.filter(v => v !== value) : [...list, value];
 }
@@ -132,7 +156,6 @@ function onSetupChip(b){
   if (d.viewers) state.viewers = Number(d.viewers);
   else if (d.type) f.type = d.type;
   else if (d.time) f.maxRuntime = Number(d.time);
-  else if (d.genre) f.genres = toggle(f.genres, d.genre);
   else if (d.provider) {
     f.providers = toggle(f.providers, Number(d.provider));
     patchSaved({ providers: f.providers });
@@ -361,12 +384,24 @@ document.addEventListener('click', e => {
   switch (b.dataset.action) {
     case 'start':   return show('setup');
     case 'home':    return show('home');
-    case 'go':      return go();
+    case 'go':      setGenrePanel(false); return go();
     case 'ready':   return show('vote');
     case 'again':   return anotherRound();
     case 'watched': return watched();
     case 'retry':   return init();
+    case 'genres-toggle': return setGenrePanel($('genre-panel').hidden);
+    case 'genres-done':   return setGenrePanel(false);
+    case 'genres-clear':
+      state.filters.genres = [];
+      return renderSetup();
   }
+});
+
+document.addEventListener('change', e => {
+  const input = e.target;
+  if (!input.matches('#genre-options input[type=checkbox]')) return;
+  state.filters.genres = toggle(state.filters.genres, input.value);
+  renderGenreSummary();
 });
 
 init();
