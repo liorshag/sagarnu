@@ -107,15 +107,14 @@ function renderSetup(){
 
   const genres = genresFor(f.type);
   f.genres = f.genres.filter(g => genres.includes(g));
-  const options = $('genre-options');
-  options.replaceChildren(options.querySelector('legend'), ...genres.map(g => {
-    const label = el('label', 'check');
-    const input = el('input');
-    input.type = 'checkbox';
-    input.value = g;
-    input.checked = f.genres.includes(g);
-    label.append(input, el('span', 'box'), el('span', 'check-text', g));
-    return label;
+  $('genre-pills').replaceChildren(...genres.map(g => {
+    const b = el('button', 'pill');
+    b.type = 'button';
+    b.dataset.genre = g;
+    b.setAttribute('aria-pressed', String(f.genres.includes(g)));
+    b.append(el('span', 'tick'), el('span', '', g));
+    b.firstChild.setAttribute('aria-hidden', 'true');
+    return b;
   }));
   renderGenreSummary();
 
@@ -133,17 +132,16 @@ function renderSetup(){
 }
 
 function renderGenreSummary(){
-  const g = state.filters.genres;
-  const summary = $('genre-summary');
-  summary.textContent = g.length === 0 ? 'Any genre'
-    : g.length <= 2 ? g.join(', ')
-    : `${g.slice(0, 2).join(', ')} +${g.length - 2}`;
-  summary.classList.toggle('is-empty', g.length === 0);
+  const n = state.filters.genres.length;
+  $('genre-count').hidden = n === 0;
+  $('genre-summary').textContent = `${n} selected`;
 }
 
-function setGenrePanel(open){
-  $('genre-panel').hidden = !open;
-  document.querySelector('[data-action="genres-toggle"]').setAttribute('aria-expanded', String(open));
+function toggleGenre(b){
+  const f = state.filters;
+  f.genres = toggle(f.genres, b.dataset.genre);
+  b.setAttribute('aria-pressed', String(f.genres.includes(b.dataset.genre)));
+  renderGenreSummary();
 }
 
 function toggle(list, value){
@@ -381,27 +379,19 @@ document.addEventListener('click', e => {
   if (!b || b.disabled) return;
   if (b.dataset.vote) return vote(b.dataset.vote);
   if (b.classList.contains('chip')) return onSetupChip(b);
+  if (b.dataset.genre) return toggleGenre(b);
   switch (b.dataset.action) {
     case 'start':   return show('setup');
     case 'home':    return show('home');
-    case 'go':      setGenrePanel(false); return go();
+    case 'go':      return go();
     case 'ready':   return show('vote');
     case 'again':   return anotherRound();
     case 'watched': return watched();
     case 'retry':   return init();
-    case 'genres-toggle': return setGenrePanel($('genre-panel').hidden);
-    case 'genres-done':   return setGenrePanel(false);
     case 'genres-clear':
       state.filters.genres = [];
       return renderSetup();
   }
-});
-
-document.addEventListener('change', e => {
-  const input = e.target;
-  if (!input.matches('#genre-options input[type=checkbox]')) return;
-  state.filters.genres = toggle(state.filters.genres, input.value);
-  renderGenreSummary();
 });
 
 init();

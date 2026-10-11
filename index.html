@@ -66,23 +66,14 @@
       </div>
 
       <div class="field">
-        <h2 class="label" id="genre-label">Genres (optional)</h2>
-        <div class="multi">
-          <button type="button" class="multi-toggle" data-action="genres-toggle"
-                  aria-expanded="false" aria-controls="genre-panel" aria-describedby="genre-label">
-            <span class="multi-summary" id="genre-summary">Any genre</span>
-            <svg class="chevron" viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M5 8l5 5 5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
-          <div class="multi-panel" id="genre-panel" hidden>
-            <fieldset class="multi-options" id="genre-options">
-              <legend class="visually-hidden">Genres</legend>
-            </fieldset>
-            <div class="multi-footer">
-              <button type="button" class="link" data-action="genres-clear">Clear</button>
-              <button type="button" class="btn btn-small" data-action="genres-done">Done</button>
-            </div>
-          </div>
+        <div class="label-row">
+          <h2 class="label" id="genre-label">Genres (optional)</h2>
+          <p class="genre-count" id="genre-count" aria-live="polite">
+            <span id="genre-summary"></span>
+            <button type="button" class="link link-sm" data-action="genres-clear">Clear</button>
+          </p>
         </div>
+        <div class="pills" id="genre-pills" role="group" aria-labelledby="genre-label"></div>
       </div>
 
       <div class="field" id="services-field">
