@@ -1,0 +1,11 @@
+{
+  "name": "Sagarnu.",
+  "short_name": "Sagarnu.",
+  "lang": "en",
+  "dir": "ltr",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#12131c",
+  "theme_color": "#12131c",
+  "icons": []
+}

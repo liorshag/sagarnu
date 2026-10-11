@@ -1,0 +1,732 @@
+{
+ "updated": "2026-10-11",
+ "region": "IL",
+ "sample": true,
+ "providers": [
+  {
+   "id": 8,
+   "name": "Netflix",
+   "logo": null
+  }
+ ],
+ "genres": [
+  "Action",
+  "Action & Adventure",
+  "Adventure",
+  "Animation",
+  "Comedy",
+  "Crime",
+  "Drama",
+  "Family",
+  "Fantasy",
+  "History",
+  "Horror",
+  "Mystery",
+  "Romance",
+  "Sci-Fi & Fantasy",
+  "Science Fiction",
+  "Thriller",
+  "War"
+ ],
+ "titles": [
+  {
+   "id": "movie-661374",
+   "tmdbId": 661374,
+   "type": "movie",
+   "title": "Glass Onion: A Knives Out Mystery",
+   "original": "Glass Onion: A Knives Out Mystery",
+   "year": 2022,
+   "runtime": 139,
+   "genres": [
+    "Comedy",
+    "Crime",
+    "Mystery"
+   ],
+   "overview": "Detective Benoit Blanc joins a tech billionaire's island getaway, where a murder-mystery party game turns into the real thing.",
+   "poster": "posters/movie-661374.jpg",
+   "rating": 7.1,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/661374/watch?locale=IL"
+  },
+  {
+   "id": "movie-646380",
+   "tmdbId": 646380,
+   "type": "movie",
+   "title": "Don't Look Up",
+   "original": "Don't Look Up",
+   "year": 2021,
+   "runtime": 138,
+   "genres": [
+    "Comedy",
+    "Drama",
+    "Science Fiction"
+   ],
+   "overview": "Two astronomers discover a comet headed straight for Earth and try to warn a world that would rather not hear it.",
+   "poster": "posters/movie-646380.jpg",
+   "rating": 7.2,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/646380/watch?locale=IL"
+  },
+  {
+   "id": "movie-398978",
+   "tmdbId": 398978,
+   "type": "movie",
+   "title": "The Irishman",
+   "original": "The Irishman",
+   "year": 2019,
+   "runtime": 209,
+   "genres": [
+    "Crime",
+    "Drama",
+    "History"
+   ],
+   "overview": "An aging hitman looks back on decades working for the mob and his part in the disappearance of Jimmy Hoffa.",
+   "poster": "posters/movie-398978.jpg",
+   "rating": 7.5,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/398978/watch?locale=IL"
+  },
+  {
+   "id": "movie-512195",
+   "tmdbId": 512195,
+   "type": "movie",
+   "title": "Red Notice",
+   "original": "Red Notice",
+   "year": 2021,
+   "runtime": 118,
+   "genres": [
+    "Action",
+    "Comedy",
+    "Crime"
+   ],
+   "overview": "An FBI profiler is forced to team up with a smooth art thief to catch the world's most wanted collector of stolen treasures.",
+   "poster": "posters/movie-512195.jpg",
+   "rating": 6.8,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/512195/watch?locale=IL"
+  },
+  {
+   "id": "movie-545609",
+   "tmdbId": 545609,
+   "type": "movie",
+   "title": "Extraction",
+   "original": "Extraction",
+   "year": 2020,
+   "runtime": 117,
+   "genres": [
+    "Action",
+    "Thriller"
+   ],
+   "overview": "A hardened mercenary is hired to rescue a crime lord's kidnapped son from a city locked down by his rival.",
+   "poster": "posters/movie-545609.jpg",
+   "rating": 7.3,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/545609/watch?locale=IL"
+  },
+  {
+   "id": "movie-497582",
+   "tmdbId": 497582,
+   "type": "movie",
+   "title": "Enola Holmes",
+   "original": "Enola Holmes",
+   "year": 2020,
+   "runtime": 123,
+   "genres": [
+    "Adventure",
+    "Crime",
+    "Mystery"
+   ],
+   "overview": "Sherlock's teenage sister sets off for London to find her missing mother and stumbles into a much bigger conspiracy.",
+   "poster": "posters/movie-497582.jpg",
+   "rating": 7.5,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/497582/watch?locale=IL"
+  },
+  {
+   "id": "movie-725201",
+   "tmdbId": 725201,
+   "type": "movie",
+   "title": "The Gray Man",
+   "original": "The Gray Man",
+   "year": 2022,
+   "runtime": 129,
+   "genres": [
+    "Action",
+    "Thriller"
+   ],
+   "overview": "A CIA operative uncovers agency secrets and becomes the target of a ruthless former colleague and a global manhunt.",
+   "poster": "posters/movie-725201.jpg",
+   "rating": 6.9,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/725201/watch?locale=IL"
+  },
+  {
+   "id": "movie-426426",
+   "tmdbId": 426426,
+   "type": "movie",
+   "title": "Roma",
+   "original": "Roma",
+   "year": 2018,
+   "runtime": 135,
+   "genres": [
+    "Drama"
+   ],
+   "overview": "A year in the life of a live-in housekeeper for a middle-class family in 1970s Mexico City.",
+   "poster": "posters/movie-426426.jpg",
+   "rating": 7.6,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/426426/watch?locale=IL"
+  },
+  {
+   "id": "movie-492188",
+   "tmdbId": 492188,
+   "type": "movie",
+   "title": "Marriage Story",
+   "original": "Marriage Story",
+   "year": 2019,
+   "runtime": 137,
+   "genres": [
+    "Comedy",
+    "Drama",
+    "Romance"
+   ],
+   "overview": "A stage director and his actor wife go through a bicoastal divorce that tests everything they still share.",
+   "poster": "posters/movie-492188.jpg",
+   "rating": 7.7,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/492188/watch?locale=IL"
+  },
+  {
+   "id": "movie-508965",
+   "tmdbId": 508965,
+   "type": "movie",
+   "title": "Klaus",
+   "original": "Klaus",
+   "year": 2019,
+   "runtime": 97,
+   "genres": [
+    "Animation",
+    "Comedy",
+    "Family"
+   ],
+   "overview": "A spoiled postman sent to a frozen island town befriends a reclusive toymaker, and a legend begins.",
+   "poster": "posters/movie-508965.jpg",
+   "rating": 8.2,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/508965/watch?locale=IL"
+  },
+  {
+   "id": "movie-696806",
+   "tmdbId": 696806,
+   "type": "movie",
+   "title": "The Adam Project",
+   "original": "The Adam Project",
+   "year": 2022,
+   "runtime": 106,
+   "genres": [
+    "Adventure",
+    "Comedy",
+    "Science Fiction"
+   ],
+   "overview": "A pilot from the future crash-lands in 2022 and teams up with his 12-year-old self to save the timeline.",
+   "poster": "posters/movie-696806.jpg",
+   "rating": 7.0,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/696806/watch?locale=IL"
+  },
+  {
+   "id": "movie-726209",
+   "tmdbId": 726209,
+   "type": "movie",
+   "title": "Leave the World Behind",
+   "original": "Leave the World Behind",
+   "year": 2023,
+   "runtime": 141,
+   "genres": [
+    "Drama",
+    "Mystery",
+    "Thriller"
+   ],
+   "overview": "A family's rental getaway turns tense when a cyberattack knocks out their devices and two strangers knock on the door.",
+   "poster": "posters/movie-726209.jpg",
+   "rating": 6.5,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/726209/watch?locale=IL"
+  },
+  {
+   "id": "movie-346648",
+   "tmdbId": 346648,
+   "type": "movie",
+   "title": "Paddington 2",
+   "original": "Paddington 2",
+   "year": 2017,
+   "runtime": 104,
+   "genres": [
+    "Adventure",
+    "Comedy",
+    "Family"
+   ],
+   "overview": "Paddington takes odd jobs to buy a rare pop-up book, until it is stolen and he is wrongly sent to prison.",
+   "poster": "posters/movie-346648.jpg",
+   "rating": 7.5,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/346648/watch?locale=IL"
+  },
+  {
+   "id": "movie-405774",
+   "tmdbId": 405774,
+   "type": "movie",
+   "title": "Bird Box",
+   "original": "Bird Box",
+   "year": 2018,
+   "runtime": 124,
+   "genres": [
+    "Horror",
+    "Science Fiction",
+    "Thriller"
+   ],
+   "overview": "A mother and two children make a blindfolded journey down a river to escape a presence that drives people to madness.",
+   "poster": "posters/movie-405774.jpg",
+   "rating": 6.9,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/405774/watch?locale=IL"
+  },
+  {
+   "id": "movie-501929",
+   "tmdbId": 501929,
+   "type": "movie",
+   "title": "The Mitchells vs. the Machines",
+   "original": "The Mitchells vs. the Machines",
+   "year": 2021,
+   "runtime": 114,
+   "genres": [
+    "Animation",
+    "Comedy",
+    "Family"
+   ],
+   "overview": "A family road trip goes off the rails when the robot uprising begins and an awkward family must save humanity.",
+   "poster": "posters/movie-501929.jpg",
+   "rating": 8.0,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/501929/watch?locale=IL"
+  },
+  {
+   "id": "movie-49046",
+   "tmdbId": 49046,
+   "type": "movie",
+   "title": "All Quiet on the Western Front",
+   "original": "Im Westen nichts Neues",
+   "year": 2022,
+   "runtime": 148,
+   "genres": [
+    "Drama",
+    "History",
+    "War"
+   ],
+   "overview": "A young German soldier's patriotic enthusiasm collides with the brutal reality of the trenches in World War I.",
+   "poster": "posters/movie-49046.jpg",
+   "rating": 7.8,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/49046/watch?locale=IL"
+  },
+  {
+   "id": "movie-961323",
+   "tmdbId": 961323,
+   "type": "movie",
+   "title": "Nimona",
+   "original": "Nimona",
+   "year": 2023,
+   "runtime": 101,
+   "genres": [
+    "Animation",
+    "Action",
+    "Fantasy"
+   ],
+   "overview": "A knight framed for a crime teams up with a shape-shifting teen to prove his innocence.",
+   "poster": "posters/movie-961323.jpg",
+   "rating": 7.9,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/961323/watch?locale=IL"
+  },
+  {
+   "id": "movie-906126",
+   "tmdbId": 906126,
+   "type": "movie",
+   "title": "Society of the Snow",
+   "original": "La sociedad de la nieve",
+   "year": 2023,
+   "runtime": 144,
+   "genres": [
+    "Drama",
+    "History"
+   ],
+   "overview": "The true story of a rugby team stranded in the Andes after a plane crash, and the impossible choices they made to survive.",
+   "poster": "posters/movie-906126.jpg",
+   "rating": 8.0,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/movie/906126/watch?locale=IL"
+  },
+  {
+   "id": "tv-66732",
+   "tmdbId": 66732,
+   "type": "series",
+   "title": "Stranger Things",
+   "original": "Stranger Things",
+   "year": 2016,
+   "runtime": 51,
+   "genres": [
+    "Drama",
+    "Mystery",
+    "Sci-Fi & Fantasy"
+   ],
+   "overview": "When a boy vanishes in a small town, his friends and family uncover secret experiments and a terrifying other world.",
+   "poster": "posters/tv-66732.jpg",
+   "rating": 8.6,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/66732/watch?locale=IL"
+  },
+  {
+   "id": "tv-119051",
+   "tmdbId": 119051,
+   "type": "series",
+   "title": "Wednesday",
+   "original": "Wednesday",
+   "year": 2022,
+   "runtime": 49,
+   "genres": [
+    "Comedy",
+    "Mystery",
+    "Sci-Fi & Fantasy"
+   ],
+   "overview": "Wednesday Addams investigates a string of murders while settling in at Nevermore Academy.",
+   "poster": "posters/tv-119051.jpg",
+   "rating": 8.5,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/119051/watch?locale=IL"
+  },
+  {
+   "id": "tv-65494",
+   "tmdbId": 65494,
+   "type": "series",
+   "title": "The Crown",
+   "original": "The Crown",
+   "year": 2016,
+   "runtime": 58,
+   "genres": [
+    "Drama"
+   ],
+   "overview": "The reign of Queen Elizabeth II, from the politics of the palace to the private lives behind it.",
+   "poster": "posters/tv-65494.jpg",
+   "rating": 8.2,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/65494/watch?locale=IL"
+  },
+  {
+   "id": "tv-93405",
+   "tmdbId": 93405,
+   "type": "series",
+   "title": "Squid Game",
+   "original": "오징어 게임",
+   "year": 2021,
+   "runtime": 55,
+   "genres": [
+    "Action & Adventure",
+    "Drama",
+    "Mystery"
+   ],
+   "overview": "Hundreds of people in debt accept an invitation to compete in children's games for a huge prize, with deadly stakes.",
+   "poster": "posters/tv-93405.jpg",
+   "rating": 7.8,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/93405/watch?locale=IL"
+  },
+  {
+   "id": "tv-71446",
+   "tmdbId": 71446,
+   "type": "series",
+   "title": "Money Heist",
+   "original": "La Casa de Papel",
+   "year": 2017,
+   "runtime": 70,
+   "genres": [
+    "Crime",
+    "Drama"
+   ],
+   "overview": "A mysterious mastermind recruits eight robbers to pull off the biggest heist in Spanish history.",
+   "poster": "posters/tv-71446.jpg",
+   "rating": 8.2,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/71446/watch?locale=IL"
+  },
+  {
+   "id": "tv-69557",
+   "tmdbId": 69557,
+   "type": "series",
+   "title": "Fauda",
+   "original": "פאודה",
+   "year": 2015,
+   "runtime": 45,
+   "genres": [
+    "Action & Adventure",
+    "Drama"
+   ],
+   "overview": "An Israeli undercover unit leader comes out of retirement to hunt a militant he thought he had killed.",
+   "poster": "posters/tv-69557.jpg",
+   "rating": 8.0,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/69557/watch?locale=IL"
+  },
+  {
+   "id": "tv-56017",
+   "tmdbId": 56017,
+   "type": "series",
+   "title": "Shtisel",
+   "original": "שטיסל",
+   "year": 2013,
+   "runtime": 50,
+   "genres": [
+    "Drama",
+    "Family"
+   ],
+   "overview": "The everyday loves, losses and quarrels of a Haredi family in a Jerusalem neighborhood.",
+   "poster": "posters/tv-56017.jpg",
+   "rating": 8.2,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/56017/watch?locale=IL"
+  },
+  {
+   "id": "tv-70523",
+   "tmdbId": 70523,
+   "type": "series",
+   "title": "Dark",
+   "original": "Dark",
+   "year": 2017,
+   "runtime": 53,
+   "genres": [
+    "Crime",
+    "Drama",
+    "Mystery",
+    "Sci-Fi & Fantasy"
+   ],
+   "overview": "A missing child pulls four families in a German town into a mystery that spans three generations.",
+   "poster": "posters/tv-70523.jpg",
+   "rating": 8.4,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/70523/watch?locale=IL"
+  },
+  {
+   "id": "tv-69740",
+   "tmdbId": 69740,
+   "type": "series",
+   "title": "Ozark",
+   "original": "Ozark",
+   "year": 2017,
+   "runtime": 60,
+   "genres": [
+    "Crime",
+    "Drama"
+   ],
+   "overview": "A financial planner relocates his family to the Missouri Ozarks to launder money for a drug cartel.",
+   "poster": "posters/tv-69740.jpg",
+   "rating": 8.2,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/69740/watch?locale=IL"
+  },
+  {
+   "id": "tv-87739",
+   "tmdbId": 87739,
+   "type": "series",
+   "title": "The Queen's Gambit",
+   "original": "The Queen's Gambit",
+   "year": 2020,
+   "runtime": 60,
+   "genres": [
+    "Drama"
+   ],
+   "overview": "An orphaned chess prodigy fights her own demons on the way to the top of the 1960s chess world.",
+   "poster": "posters/tv-87739.jpg",
+   "rating": 8.6,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/87739/watch?locale=IL"
+  },
+  {
+   "id": "tv-91239",
+   "tmdbId": 91239,
+   "type": "series",
+   "title": "Bridgerton",
+   "original": "Bridgerton",
+   "year": 2020,
+   "runtime": 62,
+   "genres": [
+    "Drama",
+    "Romance"
+   ],
+   "overview": "The eight Bridgerton siblings look for love and happiness in London high society.",
+   "poster": "posters/tv-91239.jpg",
+   "rating": 8.1,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/91239/watch?locale=IL"
+  },
+  {
+   "id": "tv-42009",
+   "tmdbId": 42009,
+   "type": "series",
+   "title": "Black Mirror",
+   "original": "Black Mirror",
+   "year": 2011,
+   "runtime": 60,
+   "genres": [
+    "Drama",
+    "Mystery",
+    "Sci-Fi & Fantasy"
+   ],
+   "overview": "Standalone stories that explore the dark side of technology and modern life.",
+   "poster": "posters/tv-42009.jpg",
+   "rating": 8.3,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/42009/watch?locale=IL"
+  },
+  {
+   "id": "tv-63351",
+   "tmdbId": 63351,
+   "type": "series",
+   "title": "Narcos",
+   "original": "Narcos",
+   "year": 2015,
+   "runtime": 50,
+   "genres": [
+    "Crime",
+    "Drama"
+   ],
+   "overview": "The rise and fall of Colombia's cocaine kingpins and the agents trying to take them down.",
+   "poster": "posters/tv-63351.jpg",
+   "rating": 8.1,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/63351/watch?locale=IL"
+  },
+  {
+   "id": "tv-154385",
+   "tmdbId": 154385,
+   "type": "series",
+   "title": "Beef",
+   "original": "Beef",
+   "year": 2023,
+   "runtime": 35,
+   "genres": [
+    "Comedy",
+    "Drama"
+   ],
+   "overview": "A road-rage incident between two strangers grows into an all-consuming feud.",
+   "poster": "posters/tv-154385.jpg",
+   "rating": 7.8,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/154385/watch?locale=IL"
+  },
+  {
+   "id": "tv-94605",
+   "tmdbId": 94605,
+   "type": "series",
+   "title": "Arcane",
+   "original": "Arcane",
+   "year": 2021,
+   "runtime": 40,
+   "genres": [
+    "Action & Adventure",
+    "Animation",
+    "Drama",
+    "Sci-Fi & Fantasy"
+   ],
+   "overview": "Two sisters end up on opposite sides of a conflict between a rich utopian city and its oppressed undercity.",
+   "poster": "posters/tv-94605.jpg",
+   "rating": 8.7,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/94605/watch?locale=IL"
+  },
+  {
+   "id": "tv-81356",
+   "tmdbId": 81356,
+   "type": "series",
+   "title": "Sex Education",
+   "original": "Sex Education",
+   "year": 2019,
+   "runtime": 50,
+   "genres": [
+    "Comedy",
+    "Drama"
+   ],
+   "overview": "An awkward teen with a sex-therapist mother starts an underground advice clinic at his school.",
+   "poster": "posters/tv-81356.jpg",
+   "rating": 8.3,
+   "providers": [
+    8
+   ],
+   "watchLink": "https://www.themoviedb.org/tv/81356/watch?locale=IL"
+  }
+ ]
+}

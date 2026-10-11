@@ -1,0 +1,11 @@
+tools/.env
+node_modules/
+__pycache__/
+dist/
+.DS_Store
+
+# local references, not part of the app
+FINAL US MODES ASSETNEW_1000x.png
+images.jpeg
+tinder-double-date.webp
+sagarnu-mvp-plan.md

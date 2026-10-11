@@ -1,0 +1,4 @@
+# Publish only the app files, never tools/, PLAN.md or the reference images.
+[build]
+  command = "rm -rf dist && mkdir dist && cp -R index.html style.css app.js titles.json manifest.json posters dist/"
+  publish = "dist"

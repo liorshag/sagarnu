@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#12131c">
+  <title>Sagarnu.</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main class="app">
+
+    <!-- HOME -->
+    <section class="screen" id="home">
+      <div class="brand">Sagarnu.</div>
+      <div class="home-body">
+        <h1 class="display">Stop scrolling.<br>Start watching.</h1>
+        <ol class="steps">
+          <li><span class="step-num">1</span>Pick what you're in the mood for</li>
+          <li><span class="step-num">2</span>Everyone votes in secret</li>
+          <li><span class="step-num">3</span>We show the match</li>
+        </ol>
+      </div>
+      <button class="btn btn-primary" data-action="start">Start movie night</button>
+      <footer class="credits">
+        <p class="updated" id="updated"></p>
+        <img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" onerror="this.remove()">
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        <p>Streaming data: JustWatch</p>
+      </footer>
+    </section>
+
+    <!-- SETUP -->
+    <section class="screen" id="setup">
+      <header class="topbar">
+        <button class="back" data-action="home" aria-label="Back">&larr;</button>
+        <div class="brand brand-sm">Sagarnu.</div>
+      </header>
+      <h1 class="display display-sm">What are we watching tonight?</h1>
+
+      <div class="field">
+        <h2 class="label">How many of you?</h2>
+        <div class="chips" id="viewers-chips"></div>
+      </div>
+
+      <div class="field">
+        <h2 class="label">Movie or series?</h2>
+        <div class="chips segmented" id="type-chips">
+          <button class="chip" data-type="movie">Movie</button>
+          <button class="chip" data-type="series">Series</button>
+        </div>
+      </div>
+
+      <div class="field" id="time-field">
+        <h2 class="label">How much time do you have?</h2>
+        <div class="chips" id="time-chips">
+          <button class="chip" data-time="90">Up to 90 min</button>
+          <button class="chip" data-time="120">Up to 2 hours</button>
+          <button class="chip" data-time="0">Doesn't matter</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <h2 class="label">Genres (optional)</h2>
+        <div class="chips" id="genre-chips"></div>
+      </div>
+
+      <div class="field" id="services-field">
+        <h2 class="label">Which services do you have?</h2>
+        <div class="chips" id="service-chips"></div>
+      </div>
+
+      <button class="btn btn-primary sticky-cta" data-action="go">Let's go</button>
+    </section>
+
+    <!-- PASS -->
+    <section class="screen" id="pass">
+      <p class="eyebrow" id="pass-viewer"></p>
+      <div class="pass-body">
+        <div class="pass-icon" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="72" height="72"><rect x="20" y="6" width="24" height="44" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M10 40c4 10 12 16 22 16s18-6 22-16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="43" r="2" fill="currentColor"/></svg>
+        </div>
+        <h1 class="display">Pass the phone</h1>
+        <p class="muted">Previous votes are hidden. Tap only when the next viewer has the phone.</p>
+      </div>
+      <button class="btn btn-primary" data-action="ready">I've got the phone</button>
+    </section>
+
+    <!-- VOTE -->
+    <section class="screen" id="vote">
+      <div class="progress" id="progress" aria-hidden="true"></div>
+      <div class="vote-meta">
+        <span id="vote-viewer"></span>
+        <span id="vote-count"></span>
+      </div>
+      <article class="card">
+        <div class="poster-wrap" id="poster-wrap"></div>
+        <div class="card-body">
+          <p class="widened" id="widened" hidden>We widened the search a bit</p>
+          <h1 class="card-title" id="card-title"></h1>
+          <p class="card-original" id="card-original"></p>
+          <p class="card-facts" id="card-facts"></p>
+          <p class="card-overview" id="card-overview"></p>
+          <p class="card-service" id="card-service"></p>
+        </div>
+      </article>
+      <div class="vote-actions">
+        <button class="btn btn-no" data-vote="no">Not tonight</button>
+        <button class="btn btn-yes" data-vote="yes">Yes, I'm in</button>
+      </div>
+      <button class="link" data-vote="seen">Already seen it</button>
+    </section>
+
+    <!-- RESULT -->
+    <section class="screen" id="result">
+      <div class="brand brand-sm">Sagarnu.</div>
+      <h1 class="display display-sm" id="result-title"></h1>
+      <div class="winner" id="winner"></div>
+      <div class="result-actions" id="result-actions">
+        <a class="btn btn-primary" id="where" target="_blank" rel="noopener">Where to watch</a>
+      </div>
+      <h2 class="label" id="rest-label">The rest of the list</h2>
+      <ol class="ranked" id="ranked"></ol>
+      <div class="result-actions">
+        <button class="btn btn-secondary" data-action="again">Another round</button>
+        <button class="btn btn-ghost" data-action="watched" id="watched">We watched this</button>
+      </div>
+      <footer class="credits">
+        <img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" onerror="this.remove()">
+        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+        <p>Streaming data: JustWatch</p>
+      </footer>
+    </section>
+
+    <!-- LOAD ERROR -->
+    <section class="screen" id="error">
+      <div class="brand">Sagarnu.</div>
+      <div class="pass-body">
+        <h1 class="display display-sm">We couldn't load the movie list</h1>
+      </div>
+      <button class="btn btn-primary" data-action="retry">Try again</button>
+    </section>
+
+  </main>
+</body>
+</html>
