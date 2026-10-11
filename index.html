@@ -27,11 +27,13 @@
         </ol>
       </div>
       <button class="btn btn-primary" data-action="start">Start movie night</button>
-      <footer class="credits">
-        <p class="updated" id="updated"></p>
-        <img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" onerror="this.remove()">
+      <p class="disclaimer">Titles streaming on Netflix in Israel, based on third-party data from JustWatch via TMDB. Availability changes often and this is not Netflix's official or complete catalogue.</p>
+      <footer class="credits" aria-labelledby="credits-title">
+        <h2 class="credits-title" id="credits-title">About &amp; credits</h2>
+        <a href="https://www.themoviedb.org/" target="_blank" rel="noopener"><img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" width="108" height="14"></a>
         <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
-        <p>Streaming data: JustWatch</p>
+        <p>Streaming availability data by <a href="https://www.justwatch.com/il" target="_blank" rel="noopener">JustWatch</a>.</p>
+        <p>NextFlick is not affiliated with or endorsed by Netflix.</p>
       </footer>
     </section>
 
@@ -76,10 +78,7 @@
         <div class="pills" id="genre-pills" role="group" aria-labelledby="genre-label"></div>
       </div>
 
-      <div class="field" id="services-field">
-        <h2 class="label">Which services do you have?</h2>
-        <div class="chips" id="service-chips"></div>
-      </div>
+      <p class="disclaimer">Showing titles JustWatch lists as streaming on Netflix in Israel. Availability may change.</p>
 
       <button class="btn btn-primary sticky-cta" data-action="go">Let's go</button>
     </section>
@@ -136,20 +135,43 @@
         <button class="btn btn-secondary" data-action="again">Another round</button>
         <button class="btn btn-ghost" data-action="watched" id="watched">We watched this</button>
       </div>
-      <footer class="credits">
-        <img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" onerror="this.remove()">
+      <p class="disclaimer">Availability on Netflix Israel comes from JustWatch via TMDB and may have changed. Check Netflix before you settle in.</p>
+      <footer class="credits" aria-label="Credits">
+        <a href="https://www.themoviedb.org/" target="_blank" rel="noopener"><img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" width="108" height="14"></a>
         <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
-        <p>Streaming data: JustWatch</p>
+        <p>Streaming availability data by <a href="https://www.justwatch.com/il" target="_blank" rel="noopener">JustWatch</a>.</p>
       </footer>
     </section>
 
-    <!-- LOAD ERROR -->
+    <!-- LOADING -->
+    <section class="screen" id="loading" aria-busy="true">
+      <div class="brand">NextFlick</div>
+      <div class="pass-body">
+        <div class="spinner" aria-hidden="true"></div>
+        <h1 class="display display-sm">Finding titles…</h1>
+        <p class="muted">Checking what's streaming on Netflix in Israel.</p>
+      </div>
+    </section>
+
+    <!-- EMPTY -->
+    <section class="screen" id="empty">
+      <div class="brand">NextFlick</div>
+      <div class="pass-body">
+        <h1 class="display display-sm">Nothing to show</h1>
+        <p class="muted">We couldn't find titles on Netflix Israel for these choices right now. Try a different type, genre or time.</p>
+      </div>
+      <button class="btn btn-primary" data-action="start">Change choices</button>
+    </section>
+
+    <!-- ERROR -->
     <section class="screen" id="error">
       <div class="brand">NextFlick</div>
       <div class="pass-body">
-        <h1 class="display display-sm">We couldn't load the movie list</h1>
+        <h1 class="display display-sm">We couldn't reach the movie database</h1>
+        <p class="muted" id="error-detail">Check your connection and try again.</p>
       </div>
       <button class="btn btn-primary" data-action="retry">Try again</button>
+      <button class="btn btn-ghost" data-action="home">Back to start</button>
     </section>
 
   </main>

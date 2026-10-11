@@ -1,4 +1,8 @@
-# Publish only the app files, never tools/, PLAN.md or the reference images.
+# Publish only the app files, never PLAN.md or other project files.
 [build]
-  command = "rm -rf dist && mkdir dist && cp -R index.html style.css app.js titles.json manifest.json posters dist/"
+  command = "rm -rf dist && mkdir dist && cp index.html style.css app.js manifest.json tmdb-logo.svg dist/"
   publish = "dist"
+
+# Server-side TMDB proxy (/api/genres, /api/titles). Needs TMDB_ACCESS_TOKEN.
+[functions]
+  directory = "netlify/functions"

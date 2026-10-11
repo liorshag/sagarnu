@@ -2,7 +2,7 @@
 
 /* ---------- saved in localStorage ---------- */
 const KEY = 'sagarnu.v1';
-// { providers: [8], seen: ['movie-346648', ...], lastFilters: {...} }
+// { seen: ['movie-346648', ...], lastFilters: {...} }
 function load(){ try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } }
 function save(data){ try { localStorage.setItem(KEY, JSON.stringify(data)); } catch {} }
 function patchSaved(changes){ save({ ...load(), ...changes }); }
@@ -13,13 +13,13 @@ function addSeen(id){
 }
 
 /* ---------- state ---------- */
-let catalog;
+const DECK_SIZE = 10;
 const saved = load();
 const state = {
   screen: 'home',
   viewers: saved.lastFilters?.viewers || 2,
   filters: {
-    type: 'movie', maxRuntime: 120, genres: [], providers: saved.providers || [], // providers = TMDB ids
+    type: 'movie', maxRuntime: 120, genres: [],   // genres = names, mapped to TMDB ids per type
     ...pick(saved.lastFilters, ['type', 'maxRuntime', 'genres'])
   },
   deck: [],        // the titles for this round
@@ -44,22 +44,68 @@ function el(tag, cls, text){
   return node;
 }
 
-/* ---------- load the catalog ---------- */
-async function init(){
-  try {
-    const res = await fetch('titles.json', { cache: 'no-cache' });
-    if (!res.ok) throw new Error(res.status);
-    catalog = await res.json();
-  } catch (err) {
-    console.error('Failed to load titles.json', err);
-    return show('error');
+/* ---------- data from TMDB (via /api, which keeps the token on the server) ---------- */
+class ApiError extends Error {
+  constructor(code, message){ super(message || code); this.code = code; }
+}
+
+const responses = new Map();   // url -> Promise, so repeat requests reuse the answer
+function getJSON(url){
+  if (!responses.has(url)) {
+    const p = fetch(url, { headers: { accept: 'application/json' } }).then(async res => {
+      const body = await res.json().catch(() => null);
+      if (!body) throw new ApiError('server_error');
+      if (!res.ok) throw new ApiError(body.error || 'server_error', body.message);
+      return body;
+    });
+    responses.set(url, p);
+    p.catch(() => responses.delete(url));   // let failures be retried
   }
-  // keep only saved services that still exist in the catalog
-  const known = catalog.providers.map(p => p.id);
-  state.filters.providers = state.filters.providers.filter(id => known.includes(id));
-  renderHome();
-  renderSetup();
-  show('home');
+  return responses.get(url);
+}
+
+let genres = null;             // { movie: [{id, name}], series: [{id, name}] }
+async function ensureGenres(){
+  if (!genres) {
+    const data = await getJSON('/api/genres');
+    const sort = list => [...list].sort((a, b) => a.name.localeCompare(b.name));
+    genres = { movie: sort(data.movie), series: sort(data.series) };
+  }
+  return genres;
+}
+
+function genreIds(f){
+  return genres[f.type].filter(g => f.genres.includes(g.name)).map(g => g.id);
+}
+
+// one pool of fetched titles per filter combination, filled page by page
+const pools = new Map();
+function poolFor(f){
+  const ids = genreIds(f);
+  const runtime = f.type === 'movie' ? f.maxRuntime : 0;
+  const key = `${f.type}|${ids.join(',')}|${runtime}`;
+  if (!pools.has(key)) pools.set(key, { type: f.type, ids, runtime, items: new Map(), nextPage: 1, totalPages: Infinity });
+  return pools.get(key);
+}
+
+async function loadNextPage(pool){
+  const q = new URLSearchParams({ type: pool.type, page: pool.nextPage });
+  if (pool.ids.length) q.set('genres', pool.ids.join(','));
+  if (pool.runtime) q.set('maxRuntime', pool.runtime);
+  const data = await getJSON(`/api/titles?${q}`);
+  for (const t of data.results) if (!pool.items.has(t.id)) pool.items.set(t.id, t);   // dedupe across pages
+  pool.totalPages = data.totalPages;
+  pool.nextPage++;
+}
+
+// fetch more pages until there are enough fresh titles or the results run out
+async function freshTitles(f, seen, used, want = DECK_SIZE * 2, maxPages = 4){
+  const pool = poolFor(f);
+  const fresh = () => [...pool.items.values()].filter(t => !seen.includes(t.id) && !used.includes(t.id));
+  for (let n = 0; fresh().length < want && pool.nextPage <= pool.totalPages && n < maxPages; n++) {
+    await loadNextPage(pool);
+  }
+  return fresh();
 }
 
 /* ---------- screens ---------- */
@@ -72,11 +118,31 @@ function show(screen){
   renderers[screen]?.();
 }
 
-function renderHome(){
-  const date = new Date(catalog.updated + 'T00:00:00');
-  const nice = isNaN(date) ? catalog.updated
-    : date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-  $('updated').textContent = `List updated ${nice}` + (catalog.sample ? ' · Sample data' : '');
+let retryAction = null;
+function showError(err, retry){
+  console.error(err);
+  const messages = {
+    missing_token: "The app isn't connected to TMDB yet. Add TMDB_ACCESS_TOKEN to the site's environment variables.",
+    tmdb_auth: 'TMDB rejected the access token. Check TMDB_ACCESS_TOKEN.',
+    tmdb_busy: 'TMDB is busy right now. Try again in a moment.'
+  };
+  $('error-detail').textContent = messages[err.code] || 'Check your connection and try again.';
+  retryAction = retry;
+  show('error');
+}
+
+async function openSetup(){
+  if (!genres) {
+    show('loading');
+    try { await ensureGenres(); }
+    catch (err) { return showError(err, openSetup); }
+  }
+  show('setup');
+}
+
+function init(){
+  show('home');
+  ensureGenres().catch(() => {});   // warm up; errors surface when setup opens
 }
 
 /* ---------- setup ---------- */
@@ -86,11 +152,6 @@ function chip(label, pressed, data){
   b.setAttribute('aria-pressed', String(pressed));
   Object.assign(b.dataset, data);
   return b;
-}
-
-function genresFor(type){
-  const present = new Set(catalog.titles.filter(t => t.type === type).flatMap(t => t.genres));
-  return catalog.genres.filter(g => present.has(g));
 }
 
 function renderSetup(){
@@ -105,9 +166,9 @@ function renderSetup(){
   $('time-field').hidden = f.type === 'series';
   for (const b of $('time-chips').children) b.setAttribute('aria-pressed', String(Number(b.dataset.time) === f.maxRuntime));
 
-  const genres = genresFor(f.type);
-  f.genres = f.genres.filter(g => genres.includes(g));
-  $('genre-pills').replaceChildren(...genres.map(g => {
+  const names = genres[f.type].map(g => g.name);
+  f.genres = f.genres.filter(g => names.includes(g));
+  $('genre-pills').replaceChildren(...names.map(g => {
     const b = el('button', 'pill');
     b.type = 'button';
     b.dataset.genre = g;
@@ -117,18 +178,6 @@ function renderSetup(){
     return b;
   }));
   renderGenreSummary();
-
-  const providers = catalog.providers;
-  $('services-field').hidden = providers.length <= 1;
-  $('service-chips').replaceChildren(...providers.map(p => {
-    const b = chip(p.name, f.providers.includes(p.id), { provider: p.id });
-    if (p.logo) {
-      const img = el('img');
-      img.src = p.logo; img.alt = ''; img.width = 24; img.height = 24;
-      b.prepend(img);
-    }
-    return b;
-  }));
 }
 
 function renderGenreSummary(){
@@ -154,28 +203,24 @@ function onSetupChip(b){
   if (d.viewers) state.viewers = Number(d.viewers);
   else if (d.type) f.type = d.type;
   else if (d.time) f.maxRuntime = Number(d.time);
-  else if (d.provider) {
-    f.providers = toggle(f.providers, Number(d.provider));
-    patchSaved({ providers: f.providers });
-  }
   renderSetup();
 }
 
 /* ---------- building the deck ---------- */
-function buildDeck(all, f, seen, used, size = 10, widened = false){
-  const pool = all.filter(t =>
-    t.type === f.type &&
-    (!f.maxRuntime || t.type === 'series' || t.runtime == null || t.runtime <= f.maxRuntime) &&
-    (f.genres.length === 0 || t.genres.some(g => f.genres.includes(g))) &&
-    (f.providers.length === 0 || t.providers.some(p => f.providers.includes(p))) &&
-    !seen.includes(t.id) && !used.includes(t.id)
-  );
-  // too few? loosen filters in this order: genres → runtime → providers
-  if (pool.length < 6 && f.genres.length)    return buildDeck(all, {...f, genres: []}, seen, used, size, true);
-  if (pool.length < 6 && f.maxRuntime && f.type === 'movie')
-                                             return buildDeck(all, {...f, maxRuntime: 0}, seen, used, size, true);
-  if (pool.length < 6 && f.providers.length) return buildDeck(all, {...f, providers: []}, seen, used, size, true);
-  return { deck: weightedShuffle(pool).slice(0, size), widened };
+async function buildDeck(f, seen, used, size = DECK_SIZE){
+  // too few? loosen filters in this order: genres → runtime
+  const tries = [f];
+  if (f.genres.length) tries.push({ ...f, genres: [] });
+  if (f.type === 'movie' && f.maxRuntime) tries.push({ ...f, genres: [], maxRuntime: 0 });
+
+  let best = { deck: [], widened: false };
+  for (let i = 0; i < tries.length; i++) {
+    const fresh = await freshTitles(tries[i], seen, used);
+    const result = { deck: weightedShuffle(fresh).slice(0, size), widened: i > 0 };
+    if (fresh.length >= 6) return result;
+    if (result.deck.length > best.deck.length) best = result;
+  }
+  return best;
 }
 // popular / well-rated titles come up a bit more often, but still random
 function weightedShuffle(a){
@@ -183,24 +228,29 @@ function weightedShuffle(a){
           .sort((x, y) => y.k - x.k).map(x => x.t);
 }
 
-function startRound(){
-  let { deck, widened } = buildDeck(catalog.titles, state.filters, getSeen(), state.usedIds);
-  if (!deck.length && state.usedIds.length) {
-    // went through everything tonight: allow repeats
-    state.usedIds = [];
-    ({ deck, widened } = buildDeck(catalog.titles, state.filters, getSeen(), state.usedIds));
+async function startRound(){
+  show('loading');
+  try {
+    let r = await buildDeck(state.filters, getSeen(), state.usedIds);
+    if (!r.deck.length && state.usedIds.length) {
+      // went through everything tonight: allow repeats
+      state.usedIds = [];
+      r = await buildDeck(state.filters, getSeen(), state.usedIds);
+    }
+    if (!r.deck.length) {
+      // everything left is marked as seen: show it anyway rather than an empty deck
+      r = await buildDeck(state.filters, [], state.usedIds);
+    }
+    if (!r.deck.length) return show('empty');
+    Object.assign(state, { deck: r.deck, widened: r.widened, voter: 0, idx: 0, votes: [] });
+    show('vote');
+  } catch (err) {
+    showError(err, startRound);
   }
-  if (!deck.length) {
-    // everything left is marked as seen: show it anyway rather than an empty deck
-    ({ deck, widened } = buildDeck(catalog.titles, state.filters, [], state.usedIds));
-  }
-  Object.assign(state, { deck, widened, voter: 0, idx: 0, votes: [] });
-  show('vote');
 }
 
 function go(){
   patchSaved({
-    providers: state.filters.providers,
     lastFilters: { viewers: state.viewers, ...pick(state.filters, ['type', 'maxRuntime', 'genres']) }
   });
   state.usedIds = [];
@@ -238,13 +288,12 @@ function poster(t, cls, width, height, lazy = true){
 }
 
 /* ---------- vote ---------- */
-function minutes(n){ return `${n} min`; }
+const TYPE_LABEL = { movie: 'Movie', series: 'Series' };
 
 function facts(t){
-  const parts = [];
+  const parts = [TYPE_LABEL[t.type]];
   if (t.year) parts.push(t.year);
   if (t.genres.length) parts.push(t.genres.slice(0, 3).join(', '));
-  if (t.runtime) parts.push(t.type === 'series' ? `${minutes(t.runtime)} / episode` : minutes(t.runtime));
   return parts.join(' · ');
 }
 
@@ -263,26 +312,18 @@ function renderVote(){
   const wrap = $('poster-wrap');
   wrap.replaceChildren(p);
   if (t.rating) wrap.append(el('span', 'rating-badge', `TMDB ${t.rating.toFixed(1)}`));
+  wrap.append(el('span', 'type-badge', TYPE_LABEL[t.type]));
 
   $('widened').hidden = !(state.widened && state.idx === 0);
   $('card-title').textContent = t.title;
   $('card-original').textContent = t.original && t.original !== t.title ? t.original : '';
   $('card-facts').textContent = facts(t);
-  $('card-overview').textContent = t.overview;
+  $('card-overview').textContent = t.overview || 'No description available yet.';
 
-  const service = $('card-service');
-  service.replaceChildren();
-  for (const id of t.providers) {
-    const prov = catalog.providers.find(p => p.id === id);
-    if (!prov) continue;
-    if (prov.logo) {
-      const img = el('img');
-      img.src = prov.logo; img.alt = ''; img.width = 22; img.height = 22;
-      service.append(img);
-    }
-    service.append(el('strong', '', prov.name));
-  }
-  service.append(el('span', '', 'Streaming data: JustWatch'));
+  $('card-service').replaceChildren(
+    el('strong', '', 'Netflix Israel'),
+    el('span', '', 'Availability by JustWatch, may change')
+  );
 
   // preload the next card's poster
   const next = state.deck[state.idx + 1];
@@ -381,13 +422,13 @@ document.addEventListener('click', e => {
   if (b.classList.contains('chip')) return onSetupChip(b);
   if (b.dataset.genre) return toggleGenre(b);
   switch (b.dataset.action) {
-    case 'start':   return show('setup');
+    case 'start':   return openSetup();
     case 'home':    return show('home');
     case 'go':      return go();
     case 'ready':   return show('vote');
     case 'again':   return anotherRound();
     case 'watched': return watched();
-    case 'retry':   return init();
+    case 'retry':   return retryAction ? retryAction() : openSetup();
     case 'genres-clear':
       state.filters.genres = [];
       return renderSetup();
