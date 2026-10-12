@@ -3,97 +3,224 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#12131c">
-  <title>NextFlick</title>
+  <meta name="theme-color" content="#141414">
+  <meta name="description" content="Movie night, decided. Swipe through what's on Netflix Israel together and NextFlick finds the pick everyone agrees on.">
+  <title>NextFlick: Movie night, decided</title>
   <link rel="manifest" href="manifest.json">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://image.tmdb.org">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
   <script src="app.js" defer></script>
 </head>
 <body>
+  <!-- icons, reused with <use href="#i-..."> -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.6-6.5 10-6.5S22 12 22 12s-3.6 6.5-10 6.5S2 12 2 12z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z" fill="currentColor"/></symbol>
+    <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 15V3m0 0L7.5 7.5M12 3l4.5 4.5M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><rect x="7" y="2.5" width="10" height="19" rx="2.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M11 18.5h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-people" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 20c.8-3.6 3.3-5.5 6.5-5.5s5.7 1.9 6.5 5.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M15.5 4.8a3.4 3.4 0 010 6.4M18 14.8c2 .7 3.2 2.4 3.6 5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+    <symbol id="i-film" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4" stroke="currentColor" stroke-width="2"/></symbol>
+    <symbol id="i-tv" viewBox="0 0 24 24"><rect x="2.5" y="6" width="19" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="M8 2.5l4 3.5 4-3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-mix" viewBox="0 0 24 24"><path d="M3 7h3.5c4.5 0 6.5 10 11 10H21M3 17h3.5c1.8 0 3.1-1.6 4.3-3.6M13.2 9.6C14.4 8 15.6 7 17.5 7H21M18 4l3 3-3 3M18 14l3 3-3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 4h10v5a5 5 0 01-10 0zM7 6H4v1.5A3.5 3.5 0 007.5 11M17 6h3v1.5a3.5 3.5 0 01-3.5 3.5M12 14v3.5M8 20.5h8M9.5 17.5h5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.8L12 16.8 6.8 19.6l1-5.8-4.3-4.1 5.9-.8z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-hand" viewBox="0 0 24 24"><path d="M3 13l4-4 3 1 3-3 3 1 5 5-4 4-3-1-2 2-3-1-2 2-4-4z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+    <symbol id="i-dice" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="3.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="8.5" cy="8.5" r="1.5" fill="currentColor"/><circle cx="15.5" cy="15.5" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></symbol>
+  </svg>
+
   <main class="app">
 
     <!-- HOME -->
     <section class="screen" id="home">
-      <div class="brand">NextFlick</div>
-      <div class="home-body">
-        <h1 class="display">Stop scrolling.<br>Start watching.</h1>
-        <ol class="steps">
-          <li><span class="step-num">1</span>Pick what you're in the mood for</li>
-          <li><span class="step-num">2</span>Everyone votes in secret</li>
-          <li><span class="step-num">3</span>We show the match</li>
-        </ol>
+      <header class="nav">
+        <a class="logo" href="./" aria-label="NextFlick home">NEXTFLICK</a>
+        <button class="btn btn-sm btn-ghost" data-action="join">Join a room</button>
+      </header>
+
+      <div class="billboard" id="billboard">
+        <div class="billboard-img" id="billboard-img"></div>
+        <div class="billboard-body">
+          <p class="eyebrow-red">Movie night</p>
+          <h1 class="hero-title">Pick what to watch, together.</h1>
+          <p class="hero-sub">Swipe through what's streaming on Netflix in Israel. NextFlick finds the title everyone agrees on. No sign-up.</p>
+          <div class="hero-actions">
+            <button class="btn btn-primary" data-action="start"><svg class="icon"><use href="#i-play"/></svg>Start Movie Night</button>
+            <button class="btn btn-gray" data-action="join">Join with a code</button>
+          </div>
+        </div>
       </div>
-      <button class="btn btn-primary" data-action="start">Start movie night</button>
-      <p class="disclaimer">Titles streaming on Netflix in Israel, based on third-party data from JustWatch via TMDB. Availability changes often and this is not Netflix's official or complete catalogue.</p>
-      <footer class="credits" aria-labelledby="credits-title">
+
+      <div class="rows">
+        <section class="row" aria-labelledby="row-movies-title">
+          <h2 class="row-title" id="row-movies-title">Popular movies on Netflix Israel</h2>
+          <div class="row-scroll" id="row-movies"></div>
+        </section>
+        <section class="row" aria-labelledby="row-series-title">
+          <h2 class="row-title" id="row-series-title">Popular series on Netflix Israel</h2>
+          <div class="row-scroll" id="row-series"></div>
+        </section>
+
+        <section class="row" aria-labelledby="how-title">
+          <h2 class="row-title" id="how-title">How Movie Night works</h2>
+          <ol class="tiles">
+            <li class="tile"><span class="tile-num">1</span><h3>Start a room</h3><p>Pick a vibe and up to 3 genres. You get a 6-letter code.</p></li>
+            <li class="tile"><span class="tile-num">2</span><h3>Share the link</h3><p>Friends join from their own phones. Or pass one phone around.</p></li>
+            <li class="tile"><span class="tile-num">3</span><h3>Swipe together</h3><p>Right for yes, left for no. Votes stay secret until the end.</p></li>
+          </ol>
+        </section>
+
+        <section class="row" aria-labelledby="match-title">
+          <h2 class="row-title" id="match-title">More than a vote count</h2>
+          <ul class="tiles tiles-2">
+            <li class="tile"><svg class="tile-icon match-perfect"><use href="#i-trophy"/></svg><h3>Perfect Match</h3><p>Everyone said yes. No debate needed.</p></li>
+            <li class="tile"><svg class="tile-icon match-strong"><use href="#i-star"/></svg><h3>Strong Match</h3><p>Most of you want it. An easy sell for the rest.</p></li>
+            <li class="tile"><svg class="tile-icon match-compromise"><use href="#i-hand"/></svg><h3>Smart Compromise</h3><p>Not everyone's first pick, but it got the most yeses.</p></li>
+            <li class="tile"><svg class="tile-icon match-wild"><use href="#i-dice"/></svg><h3>Wildcard</h3><p>A surprise someone loved. Feeling brave?</p></li>
+          </ul>
+        </section>
+      </div>
+
+      <footer class="site-footer" aria-labelledby="credits-title">
+        <p class="disclaimer">Titles shown are ones JustWatch lists as streaming on Netflix in Israel, via TMDB. This is third-party data: availability changes often and this is not Netflix's official or complete catalogue.</p>
         <h2 class="credits-title" id="credits-title">About &amp; credits</h2>
         <a href="https://www.themoviedb.org/" target="_blank" rel="noopener"><img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" width="108" height="14"></a>
         <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
         <p>Streaming availability data by <a href="https://www.justwatch.com/il" target="_blank" rel="noopener">JustWatch</a>.</p>
-        <p>NextFlick is not affiliated with or endorsed by Netflix.</p>
+        <p>NextFlick is an independent project, not affiliated with or endorsed by Netflix.</p>
       </footer>
     </section>
 
-    <!-- SETUP -->
-    <section class="screen" id="setup">
-      <header class="topbar">
-        <button class="back" data-action="home" aria-label="Back">&larr;</button>
-        <div class="brand brand-sm">NextFlick</div>
+    <!-- CREATE -->
+    <section class="screen" id="create">
+      <header class="nav nav-solid">
+        <button class="icon-btn" data-action="home" aria-label="Back"><svg class="icon"><use href="#i-back"/></svg></button>
+        <span class="logo logo-sm">NEXTFLICK</span>
+        <span class="nav-spacer"></span>
       </header>
-      <h1 class="display display-sm">What are we watching tonight?</h1>
+      <div class="page">
+        <h1 class="page-title">Start a Movie Night</h1>
 
-      <div class="field">
-        <h2 class="label">How many of you?</h2>
-        <div class="chips" id="viewers-chips"></div>
-      </div>
-
-      <div class="field">
-        <h2 class="label">Movie or series?</h2>
-        <div class="chips segmented" id="type-chips">
-          <button class="chip" data-type="movie">Movie</button>
-          <button class="chip" data-type="series">Series</button>
+        <div class="field">
+          <h2 class="label">How are you voting?</h2>
+          <div class="mode-cards" role="radiogroup" aria-label="How are you voting?">
+            <button class="mode-card" data-mode="room" role="radio">
+              <svg class="icon-lg"><use href="#i-people"/></svg>
+              <strong>Everyone's own phone</strong>
+              <span>Share a code, swipe at the same time</span>
+            </button>
+            <button class="mode-card" data-mode="local" role="radio">
+              <svg class="icon-lg"><use href="#i-phone"/></svg>
+              <strong>Pass one phone</strong>
+              <span>Take turns on this device</span>
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="field" id="time-field">
-        <h2 class="label">How much time do you have?</h2>
-        <div class="chips" id="time-chips">
-          <button class="chip" data-time="90">Up to 90 min</button>
-          <button class="chip" data-time="120">Up to 2 hours</button>
-          <button class="chip" data-time="0">Doesn't matter</button>
+        <div class="field" id="name-field">
+          <label class="label" for="host-name">Your name</label>
+          <input class="input" id="host-name" maxlength="24" autocomplete="given-name" placeholder="e.g. Noa">
         </div>
-      </div>
 
-      <div class="field">
-        <div class="label-row">
-          <h2 class="label" id="genre-label">Genres (optional)</h2>
-          <p class="genre-count" id="genre-count" aria-live="polite">
-            <span id="genre-summary"></span>
-            <button type="button" class="link link-sm" data-action="genres-clear">Clear</button>
-          </p>
+        <div class="field" id="viewers-field">
+          <h2 class="label">How many of you?</h2>
+          <div class="chips" id="viewers-chips"></div>
         </div>
-        <div class="pills" id="genre-pills" role="group" aria-labelledby="genre-label"></div>
+
+        <div class="field">
+          <h2 class="label">What's the vibe?</h2>
+          <div class="vibes" role="radiogroup" aria-label="What's the vibe?">
+            <button class="vibe" data-vibe="mix" role="radio"><svg class="icon-lg"><use href="#i-mix"/></svg><strong>Mix</strong><span>A bit of everything</span></button>
+            <button class="vibe" data-vibe="movie" role="radio"><svg class="icon-lg"><use href="#i-film"/></svg><strong>Movies</strong><span>Feature films</span></button>
+            <button class="vibe" data-vibe="series" role="radio"><svg class="icon-lg"><use href="#i-tv"/></svg><strong>TV Shows</strong><span>Binge-worthy series</span></button>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label-row">
+            <h2 class="label" id="genre-label">Genres <span class="label-note">(optional, up to 3)</span></h2>
+            <p class="genre-count" id="genre-count" aria-live="polite">
+              <span id="genre-summary"></span>
+              <button type="button" class="link link-sm" data-action="genres-clear">Clear</button>
+            </p>
+          </div>
+          <div class="pills" id="genre-pills" role="group" aria-labelledby="genre-label"></div>
+        </div>
+
+        <div class="field" id="time-field">
+          <h2 class="label">How much time for a movie?</h2>
+          <div class="chips" id="time-chips">
+            <button class="chip" data-time="90">Up to 90 min</button>
+            <button class="chip" data-time="120">Up to 2 hours</button>
+            <button class="chip" data-time="0">Doesn't matter</button>
+          </div>
+        </div>
+
+        <p class="disclaimer">Showing titles JustWatch lists as streaming on Netflix in Israel. Availability may change.</p>
+        <p class="form-error" id="create-error" role="alert" hidden></p>
+        <button class="btn btn-primary btn-block sticky-cta" data-action="create" id="create-btn">Create room</button>
       </div>
-
-      <p class="disclaimer">Showing titles JustWatch lists as streaming on Netflix in Israel. Availability may change.</p>
-
-      <button class="btn btn-primary sticky-cta" data-action="go">Let's go</button>
     </section>
 
-    <!-- PASS -->
+    <!-- JOIN -->
+    <section class="screen" id="join">
+      <header class="nav nav-solid">
+        <button class="icon-btn" data-action="home" aria-label="Back"><svg class="icon"><use href="#i-back"/></svg></button>
+        <span class="logo logo-sm">NEXTFLICK</span>
+        <span class="nav-spacer"></span>
+      </header>
+      <form class="page" id="join-form" novalidate>
+        <h1 class="page-title">Join a Movie Night</h1>
+        <p class="muted">Ask the host for the 6-letter room code.</p>
+        <div class="field">
+          <label class="label" for="join-code">Room code</label>
+          <input class="input input-code" id="join-code" maxlength="6" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="ABC123">
+        </div>
+        <div class="field">
+          <label class="label" for="join-name">Your name</label>
+          <input class="input" id="join-name" maxlength="24" autocomplete="given-name" placeholder="e.g. Dan">
+        </div>
+        <p class="form-error" id="join-error" role="alert" hidden></p>
+        <button class="btn btn-primary btn-block" type="submit">Join room</button>
+      </form>
+    </section>
+
+    <!-- LOBBY -->
+    <section class="screen" id="lobby">
+      <header class="nav nav-solid">
+        <button class="icon-btn" data-action="leave" aria-label="Leave room"><svg class="icon"><use href="#i-back"/></svg></button>
+        <span class="logo logo-sm">NEXTFLICK</span>
+        <span class="nav-spacer"></span>
+      </header>
+      <div class="page">
+        <p class="eyebrow-red">Room code</p>
+        <p class="room-code" id="lobby-code"></p>
+        <p class="muted" id="lobby-vibe"></p>
+        <div class="share-actions">
+          <button class="btn btn-gray" data-action="share"><svg class="icon"><use href="#i-share"/></svg>Share link</button>
+          <button class="btn btn-gray" data-action="copy-code" id="copy-code">Copy code</button>
+        </div>
+        <h2 class="label">Who's here <span class="label-note" id="lobby-count"></span></h2>
+        <ul class="members" id="lobby-members"></ul>
+        <p class="muted center" id="lobby-wait" hidden>Waiting for the host to start…</p>
+        <button class="btn btn-primary btn-block sticky-cta" data-action="room-start" id="lobby-start" hidden>Start swiping</button>
+      </div>
+    </section>
+
+    <!-- PASS (one phone) -->
     <section class="screen" id="pass">
       <p class="eyebrow" id="pass-viewer"></p>
-      <div class="pass-body">
-        <div class="pass-icon" aria-hidden="true">
-          <svg viewBox="0 0 64 64" width="72" height="72"><rect x="20" y="6" width="24" height="44" rx="5" fill="none" stroke="currentColor" stroke-width="3"/><path d="M10 40c4 10 12 16 22 16s18-6 22-16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="43" r="2" fill="currentColor"/></svg>
-        </div>
-        <h1 class="display">Pass the phone</h1>
-        <p class="muted">Previous votes are hidden. Tap only when the next viewer has the phone.</p>
+      <div class="center-body">
+        <svg class="pass-icon" aria-hidden="true"><use href="#i-phone"/></svg>
+        <h1 class="page-title">Pass the phone</h1>
+        <p class="muted">Previous votes are hidden. Tap only when the next person has the phone.</p>
       </div>
-      <button class="btn btn-primary" data-action="ready">I've got the phone</button>
+      <button class="btn btn-primary btn-block" data-action="ready">I've got the phone</button>
     </section>
 
     <!-- VOTE -->
@@ -103,77 +230,88 @@
         <span id="vote-viewer"></span>
         <span id="vote-count"></span>
       </div>
-      <article class="card">
-        <div class="poster-wrap" id="poster-wrap"></div>
-        <div class="card-body">
-          <p class="widened" id="widened" hidden>We widened the search a bit</p>
-          <h1 class="card-title" id="card-title"></h1>
-          <p class="card-original" id="card-original"></p>
-          <p class="card-facts" id="card-facts"></p>
-          <p class="card-overview" id="card-overview"></p>
-          <p class="card-service" id="card-service"></p>
-        </div>
-      </article>
+      <div class="deck" id="deck" aria-live="polite"></div>
+      <p class="swipe-hint" id="swipe-hint">Swipe right for yes, left for no</p>
       <div class="vote-actions">
-        <button class="btn btn-no" data-vote="no">Not tonight</button>
-        <button class="btn btn-yes" data-vote="yes">Yes, I'm in</button>
+        <button class="round-btn round-no" data-vote="no" aria-label="Not tonight"><svg class="icon"><use href="#i-x"/></svg></button>
+        <button class="round-btn round-seen" data-vote="seen" aria-label="Already seen it"><svg class="icon"><use href="#i-eye"/></svg></button>
+        <button class="round-btn round-yes" data-vote="yes" aria-label="Yes, I'm in"><svg class="icon"><use href="#i-check"/></svg></button>
       </div>
-      <button class="link" data-vote="seen">Already seen it</button>
+      <div class="vote-labels" aria-hidden="true"><span>Nope</span><span>Seen it</span><span>Yes</span></div>
+    </section>
+
+    <!-- WAITING (rooms) -->
+    <section class="screen" id="waiting">
+      <div class="center-body">
+        <div class="spinner" aria-hidden="true"></div>
+        <h1 class="page-title">You're done!</h1>
+        <p class="muted" id="waiting-text"></p>
+        <ul class="members members-compact" id="waiting-members"></ul>
+      </div>
+      <button class="btn btn-gray btn-block" data-action="room-reveal" id="waiting-reveal" hidden>Show results now</button>
     </section>
 
     <!-- RESULT -->
     <section class="screen" id="result">
-      <div class="brand brand-sm">NextFlick</div>
-      <h1 class="display display-sm" id="result-title"></h1>
-      <div class="winner" id="winner"></div>
-      <div class="result-actions" id="result-actions">
-        <a class="btn btn-primary" id="where" target="_blank" rel="noopener">Where to watch</a>
+      <div class="result-hero" id="result-hero">
+        <div class="billboard-img" id="result-img"></div>
+        <div class="result-hero-body">
+          <p class="match-badge" id="match-badge"></p>
+          <h1 class="hero-title" id="result-title"></h1>
+          <p class="hero-sub" id="result-sub"></p>
+          <p class="result-facts" id="result-facts"></p>
+          <div class="hero-actions" id="result-actions">
+            <a class="btn btn-white" id="where" target="_blank" rel="noopener"><svg class="icon"><use href="#i-play"/></svg>Where to watch</a>
+          </div>
+        </div>
       </div>
-      <h2 class="label" id="rest-label">The rest of the list</h2>
-      <ol class="ranked" id="ranked"></ol>
-      <div class="result-actions">
-        <button class="btn btn-secondary" data-action="again">Another round</button>
-        <button class="btn btn-ghost" data-action="watched" id="watched">We watched this</button>
+      <div class="page">
+        <div class="wildcard" id="wildcard" hidden></div>
+        <h2 class="row-title" id="rest-label">Everything you voted on</h2>
+        <ol class="ranked" id="ranked"></ol>
+        <div class="result-buttons">
+          <button class="btn btn-primary btn-block" data-action="again" id="again-btn">Another round</button>
+          <button class="btn btn-gray btn-block" data-action="watched" id="watched">We watched this</button>
+          <button class="btn btn-ghost btn-block" data-action="home">Back to start</button>
+        </div>
+        <p class="disclaimer">Availability on Netflix Israel comes from JustWatch via TMDB and may have changed. Check Netflix before you settle in.</p>
+        <footer class="site-footer site-footer-tight" aria-label="Credits">
+          <a href="https://www.themoviedb.org/" target="_blank" rel="noopener"><img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" width="108" height="14"></a>
+          <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
+          <p>Streaming availability data by <a href="https://www.justwatch.com/il" target="_blank" rel="noopener">JustWatch</a>.</p>
+        </footer>
       </div>
-      <p class="disclaimer">Availability on Netflix Israel comes from JustWatch via TMDB and may have changed. Check Netflix before you settle in.</p>
-      <footer class="credits" aria-label="Credits">
-        <a href="https://www.themoviedb.org/" target="_blank" rel="noopener"><img class="tmdb-logo" src="tmdb-logo.svg" alt="TMDB" width="108" height="14"></a>
-        <p>This product uses the TMDB API but is not endorsed or certified by TMDB.</p>
-        <p>Streaming availability data by <a href="https://www.justwatch.com/il" target="_blank" rel="noopener">JustWatch</a>.</p>
-      </footer>
     </section>
 
     <!-- LOADING -->
     <section class="screen" id="loading" aria-busy="true">
-      <div class="brand">NextFlick</div>
-      <div class="pass-body">
+      <div class="center-body">
         <div class="spinner" aria-hidden="true"></div>
-        <h1 class="display display-sm">Finding titles…</h1>
+        <h1 class="page-title" id="loading-title">Finding titles…</h1>
         <p class="muted">Checking what's streaming on Netflix in Israel.</p>
       </div>
     </section>
 
     <!-- EMPTY -->
     <section class="screen" id="empty">
-      <div class="brand">NextFlick</div>
-      <div class="pass-body">
-        <h1 class="display display-sm">Nothing to show</h1>
-        <p class="muted">We couldn't find titles on Netflix Israel for these choices right now. Try a different type, genre or time.</p>
+      <div class="center-body">
+        <h1 class="page-title">Nothing to show</h1>
+        <p class="muted">We couldn't find titles on Netflix Israel for these choices right now. Try a different vibe, genre or time.</p>
       </div>
-      <button class="btn btn-primary" data-action="start">Change choices</button>
+      <button class="btn btn-primary btn-block" data-action="start">Change choices</button>
     </section>
 
     <!-- ERROR -->
     <section class="screen" id="error">
-      <div class="brand">NextFlick</div>
-      <div class="pass-body">
-        <h1 class="display display-sm">We couldn't reach the movie database</h1>
+      <div class="center-body">
+        <h1 class="page-title" id="error-title">Something went wrong</h1>
         <p class="muted" id="error-detail">Check your connection and try again.</p>
       </div>
-      <button class="btn btn-primary" data-action="retry">Try again</button>
-      <button class="btn btn-ghost" data-action="home">Back to start</button>
+      <button class="btn btn-primary btn-block" data-action="retry">Try again</button>
+      <button class="btn btn-ghost btn-block" data-action="home">Back to start</button>
     </section>
 
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   </main>
 </body>
 </html>

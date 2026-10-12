@@ -10,6 +10,7 @@
 
 const API = 'https://api.themoviedb.org/3';
 const IMG = 'https://image.tmdb.org/t/p/w342';
+const BACKDROP = 'https://image.tmdb.org/t/p/w780';
 const REGION = 'IL';
 const NETFLIX = 8;
 const LANG = 'en-US';
@@ -71,6 +72,7 @@ function normalize(r, type, names){
     genres: (r.genre_ids || []).map(id => names.get(id)).filter(Boolean),
     overview: r.overview || '',
     poster: r.poster_path ? IMG + r.poster_path : null,
+    backdrop: r.backdrop_path ? BACKDROP + r.backdrop_path : null,
     rating: r.vote_average ? Math.round(r.vote_average * 10) / 10 : null,
     votes: r.vote_count || 0,
     watchLink: `https://www.themoviedb.org/${KIND[type]}/${r.id}/watch?locale=${REGION}`

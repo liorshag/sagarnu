@@ -1,0 +1,9 @@
+{
+  "name": "nextflick",
+  "private": true,
+  "type": "module",
+  "description": "Pick a movie or series on Netflix Israel together. Static app + Netlify functions.",
+  "dependencies": {
+    "@netlify/blobs": "^8.1.0"
+  }
+}
